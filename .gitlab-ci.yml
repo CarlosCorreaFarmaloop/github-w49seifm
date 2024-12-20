@@ -1,0 +1,9 @@
+include:
+  - project: 'farmaloop-latam/infra/gitlab-ci-fc'
+    file:
+      - 'serverless-lambda.yml'
+
+variables:
+  LAMBDA_RUNTIME: 'nodejs16.x'
+  APP_NAME: 'admin-back-seguro-complementario-output'
+  REGIONS: 'us-east-1'

@@ -1,0 +1,34 @@
+service: ${CI_PROJECT_NAME}
+
+provider:
+  name: aws
+  runtime: ${LAMBDA_RUNTIME}
+  region: ${REGION}
+  iam:
+    role: ${LAMBDA_ROLE_ARN}
+  tracing:
+    lambda: true
+
+functions:
+  main:
+    handler: build/handler.handler
+    tracing: Active
+    timeout: 30
+    environment:
+      ENV: ${ENV}
+      BSALE_TOKEN: ${BSALE_TOKEN}
+      DOCUMENTOSTRIBUTARIOS_INPUT_BASEURL: ${DOCUMENTOSTRIBUTARIOS_INPUT_BASEURL}
+      DOCUMENTOSTRIBUTARIOS_INPUT_API_KEY: ${DOCUMENTOSTRIBUTARIOS_INPUT_API_KEY}
+      YAPP_BASE_URL: ${YAPP_BASE_URL}
+      YAPP_API_KEY: ${YAPP_API_KEY}
+      YAPP_POS_CODE: ${YAPP_POS_CODE}
+    vpc:
+      securityGroupIds:
+        - ${LAMBDA_SG}
+      subnetIds:
+        # - ${PUBLIC_SUBNET_1}
+        # - ${PUBLIC_SUBNET_2}
+        # - ${PUBLIC_SUBNET_3}
+        - ${PRIVATE_SUBNET_1}
+        - ${PRIVATE_SUBNET_2}
+        - ${PRIVATE_SUBNET_3}
